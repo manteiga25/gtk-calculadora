@@ -1,8 +1,8 @@
 #include <gtkmm.h>
 #include <string>
-#include <iomanip>
-#include <iostream>
-#include <cmath>
+//#include <iomanip>
+//#include <iostream>
+//#include <cmath>
 
 using namespace Gtk;
 using namespace std;
@@ -103,7 +103,7 @@ Janela::Janela()
   
 void Janela::digitos_click(unsigned short digito)
 {
-  cout << digito << "\n";
+ // cout << digito << "\n";
   if (res == 1 && !continua)
   {
     limpar();
@@ -117,7 +117,7 @@ void Janela::digitos_click(unsigned short digito)
      // sub_num2 /= pow(10, contador2);
      // sub_num2 /= 10;
       //sub_num2 = (sub_num2 + digito) + pow(10, contador2) / pow(10, contador2);
-      cout << "contador2 " << contador2 << " sub_num2 " << sub_num2 << "\n";
+   //   cout << "contador2 " << contador2 << " sub_num2 " << sub_num2 << "\n";
       }
     else {
       if (!continua) {
@@ -129,7 +129,7 @@ void Janela::digitos_click(unsigned short digito)
    //   sub_num1 /= pow(10, contador);
      // sub_num1 /= 10;
     //  sub_num1 = (sub_num1 + digito) + pow(10, contador) / pow(10, contador); //+ pow(10, contador);
-      cout << "contador " << contador << " sub_num1 " << sub_num1 << "\n";
+  //    cout << "contador " << contador << " sub_num1 " << sub_num1 << "\n";
       }
       else sub_num1 = resultado;
       
@@ -141,7 +141,7 @@ void Janela::digitos_click(unsigned short digito)
 void Janela::del_click() {
 if (mostrador.get_text() != "") {
   saved = mostrador.get_text();
-  cout << saved[saved.length() - 1] << endl;
+//  cout << saved[saved.length() - 1] << endl;
   if (saved.find(".") == string::npos || saved[saved.length() - 1] == '.') { virgula_num = false; }
   if (virgula_num) {
     if (segundo_op && contador2) {
@@ -154,7 +154,7 @@ if (mostrador.get_text() != "") {
      // sub_num2 /= pow(10, contador2);
      // sub_num2 /= 10;
       //sub_num2 = (sub_num2 + digito) + pow(10, contador2) / pow(10, contador2);
-      cout << "contador2 " << contador2 << " sub_num2 " << sub_num2 << "\n";
+    //  cout << "contador2 " << contador2 << " sub_num2 " << sub_num2 << "\n";
       }
     else if (contador) {
     //  if (!continua) {
@@ -168,7 +168,7 @@ if (mostrador.get_text() != "") {
    //   sub_num1 /= pow(10, contador);
      // sub_num1 /= 10;
     //  sub_num1 = (sub_num1 + digito) + pow(10, contador) / pow(10, contador); //+ pow(10, contador);
-      cout << "contador " << contador << " sub_num1 " << sub_num1 << "\n";
+   //   cout << "contador " << contador << " sub_num1 " << sub_num1 << "\n";
    //   } 
     //  else sub_num1 = resultado;
       
@@ -215,13 +215,13 @@ void Janela::calc()
   for (int i = contador; i > 0; --i) { sub_num1 /= 10; }
   for (int i = contador2; i > 0; --i) { sub_num2 /= 10; }
     num2 = stol(mostrador.get_text());
-    cout << num2 << "\n";
+ //   cout << num2 << "\n";
     soma1 = (num1 + sub_num1); //* pow(10, contador);
     if (continua && num2 < 1)
     soma2 = sub_num2;
     else
     soma2 = (num2 + sub_num2); //* pow(10, contador2);
-    cout << "soma1 " << soma1 << " soma2 " << soma2 << "\n";
+//    cout << "soma1 " << soma1 << " soma2 " << soma2 << "\n";
     if (opera == "+") {
     resultado = soma1 + soma2;
       if (((soma1 - (long) soma1 == 0 && soma2 - (long) soma2 == 0) && ( soma2 >= 1 && soma1 >= 1)) || (resultado - (long) resultado == 0)) { // condição para  0r)sultado de numeros inteiro sem mostrar as casas decimais
@@ -232,7 +232,7 @@ void Janela::calc()
       resultado = soma1 + soma2;
       mostrador.set_text(to_string(resultado));
       }
-      cout << soma1 << " + " << soma2 << " = " << soma1 + soma2 << endl;
+ //     cout << soma1 << " + " << soma2 << " = " << soma1 + soma2 << endl;
       }
     else if (opera == "-") {
     resultado = soma1 - soma2;
