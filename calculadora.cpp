@@ -18,7 +18,8 @@ class Janela : public Window
     double sub_num1 = 0, sub_num2 = 0, res_div = 0, resultado = 0;
     double soma1 = 0, soma2 = 0;
     int contador = 0, contador2 = 0;
-    string opera = "";
+ //   unsigned short save = 0;
+    string opera = "", saved = "", save = "", save2 = "";
     bool res = false, virgula_num = false, segundo_op = false, continua = false;
     Entry mostrador;
     Button digitos[10];
@@ -26,11 +27,13 @@ class Janela : public Window
     Button clr;
     Button calcular;
     Button virgula;
+    Button del;
     void digitos_click(unsigned short digitos);
     void operacoes_click(unsigned short op);
     void virgula_click();
     void calc();
     void limpar();
+    void del_click();
 };
 
 int main(int argc, char *argv[])
@@ -84,10 +87,16 @@ Janela::Janela()
 
   calcular.set_label("CALCULAR");
   calcular.signal_clicked().connect(sigc::mem_fun(this, &Janela::calc));
-  grelha.attach(calcular, 0, 4, 3, 1);
+  grelha.attach(calcular, 0, 4, 2, 1);
+  
   virgula.set_label(".");
   virgula.signal_clicked().connect(sigc::mem_fun(this, &Janela::virgula_click));
   grelha.attach(virgula, 4, 4, 1, 1);
+  
+  del.set_label("DELETE");
+  del.signal_clicked().connect(sigc::mem_fun(this, &Janela::del_click));
+  grelha.attach(del, 2, 4, 1, 1);
+  
   add(grelha);
   show_all_children();
   }
@@ -104,6 +113,7 @@ void Janela::digitos_click(unsigned short digito)
       ++contador2;
       sub_num2 *= 10;
       sub_num2 += digito;
+      save2 += digito;
      // sub_num2 /= pow(10, contador2);
      // sub_num2 /= 10;
       //sub_num2 = (sub_num2 + digito) + pow(10, contador2) / pow(10, contador2);
@@ -115,6 +125,7 @@ void Janela::digitos_click(unsigned short digito)
    //   for (int i = 0; i < contador; i++) {
       sub_num1 *= 10;
       sub_num1 += digito;
+      save += digito;
    //   sub_num1 /= pow(10, contador);
      // sub_num1 /= 10;
     //  sub_num1 = (sub_num1 + digito) + pow(10, contador) / pow(10, contador); //+ pow(10, contador);
@@ -125,6 +136,48 @@ void Janela::digitos_click(unsigned short digito)
       }
   }
   mostrador.set_text(mostrador.get_text() + to_string(digito));
+}
+
+void Janela::del_click() {
+if (mostrador.get_text() != "") {
+  saved = mostrador.get_text();
+  cout << saved[saved.length() - 1] << endl;
+  if (saved.find(".") == string::npos || saved[saved.length() - 1] == '.') { virgula_num = false; }
+  if (virgula_num) {
+    if (segundo_op && contador2) {
+      --contador2;
+      sub_num2 -= save2[save2.length() - 1];
+      sub_num2 /= 10;
+      save2.pop_back();
+    //  sub_num2 *= 10;
+    //  sub_num2 += digito;
+     // sub_num2 /= pow(10, contador2);
+     // sub_num2 /= 10;
+      //sub_num2 = (sub_num2 + digito) + pow(10, contador2) / pow(10, contador2);
+      cout << "contador2 " << contador2 << " sub_num2 " << sub_num2 << "\n";
+      }
+    else if (contador) {
+    //  if (!continua) {
+      --contador;
+      sub_num1 -= save[save.length() - 1];
+      sub_num1 /= 10;
+      save.pop_back();
+   //   for (int i = 0; i < contador; i++) {
+   //   sub_num1 *= 10;
+   //   sub_num1 += digito;
+   //   sub_num1 /= pow(10, contador);
+     // sub_num1 /= 10;
+    //  sub_num1 = (sub_num1 + digito) + pow(10, contador) / pow(10, contador); //+ pow(10, contador);
+      cout << "contador " << contador << " sub_num1 " << sub_num1 << "\n";
+   //   } 
+    //  else sub_num1 = resultado;
+      
+      }
+  }
+//  }
+  saved.pop_back();
+  mostrador.set_text(saved);
+}
 }
 
 void Janela::virgula_click()
@@ -241,8 +294,9 @@ void Janela::limpar()
 {
   num1 = -1;
   num2 = -1;
-  opera = "";
+  save2 = save = saved = opera = "";
   res = 0;
+ // save = 0;
   continua = virgula_num = segundo_op = false;
   soma1 = soma2 = 0;
   resultado = res_div = sub_num1 = sub_num2 = 0;
